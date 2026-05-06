@@ -1,0 +1,45 @@
+import numpy as np
+import matplotlib.pyplot as mp
+
+a = np.linspace(-5, 5, 100)
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def tanh(x):
+    return np.tanh(x)
+
+def relu(x):
+    return np.maximum(0, x)
+
+# Calculate outputs
+b_sig = sigmoid(a)
+b_tanh = tanh(a)
+b_relu = relu(a)
+
+# -------- Sigmoid Plot --------
+mp.figure()
+mp.plot(a, b_sig, color="blue")
+mp.title("Sigmoid Function")
+mp.xlabel("Input")
+mp.ylabel("Output")
+mp.grid()
+mp.show()
+
+# -------- Tanh Plot --------
+mp.figure()
+mp.plot(a, b_tanh, color="green")
+mp.title("Tanh Function")
+mp.xlabel("Input")
+mp.ylabel("Output")
+mp.grid()
+mp.show()
+
+# -------- ReLU Plot --------
+mp.figure()
+mp.plot(a, b_relu, color="red")
+mp.title("ReLU Function")
+mp.xlabel("Input")
+mp.ylabel("Output")
+mp.grid()
+mp.show()

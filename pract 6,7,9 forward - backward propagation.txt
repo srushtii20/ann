@@ -1,0 +1,52 @@
+import numpy as np
+
+X = np.array([[0, 0],
+              [0, 1],
+              [1, 0],
+              [1, 1]])
+
+Y = np.array([[0],
+              [1],
+              [1],
+              [0]])
+
+
+lr = 0.1
+epochs = 5000
+
+np.random.seed(0)
+
+W1 = np.random.rand(2, 2)
+W2 = np.random.rand(2, 1)
+b1 = np.random.rand(1, 2)
+b2 = np.random.rand(1, 1)
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def d_sigmoid(x):
+    return x * (1 - x)
+
+
+for _ in range(epochs):
+
+    h = sigmoid(np.dot(X, W1) + b1)
+    o = sigmoid(np.dot(h, W2) + b2)
+
+    e = Y - o
+
+    d_output = e * d_sigmoid(o)
+    d_hidden = np.dot(d_output, W2.T) * d_sigmoid(h)
+
+    W2 += np.dot(h.T, d_output) * lr
+    W1 += np.dot(X.T, d_hidden) * lr
+
+    b2 += np.sum(d_output, axis=0) * lr
+    b1 += np.sum(d_hidden, axis=0) * lr
+
+h_test = sigmoid(np.dot(X, W1) + b1)
+o_test = sigmoid(np.dot(h_test, W2) + b2)
+
+pred = (o_test > 0.5).astype(int)
+
+print("Predictions:\n", pred)

@@ -1,0 +1,37 @@
+import numpy as np
+X = np.array([
+    [1, 1, 0, 0],
+    [1, 0, 0, 0],
+    [0, 0, 1, 1],
+    [0, 0, 1, 0]
+])
+
+rho = 0.6
+clusters = []
+
+for x in X:
+    print("Input:", x)
+    flag = 0
+
+    for i in range(len(clusters)):
+        c = clusters[i]
+
+        match = np.sum(np.minimum(x, c)) / np.sum(x)
+
+        if match >= rho:
+            clusters[i] = np.minimum(x, c)
+            print("Updated Cluster", i, ":", clusters[i])
+            flag = 1
+            break
+
+    if flag == 0:
+        clusters.append(x.copy())
+        print("New Cluster", len(clusters) - 1, ":", x)
+
+    print()
+
+print("Final Clusters:")
+for i in range(len(clusters)):
+    print(i, ":", clusters[i])
+
+print("Number of clusters:", len(clusters))

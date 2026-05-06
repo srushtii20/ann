@@ -1,0 +1,68 @@
+import numpy as np
+X = []
+
+for i in range(10):
+    asc = ord(str(i))                
+    bin_val = format(asc, '07b')     
+    X.append([int(bit) for bit in bin_val])
+
+X = np.array(X)
+
+print("X =\n", X)
+
+W = np.zeros(7)
+print("Initial_Wt =", W)
+
+b = 0
+lr = 0.1     
+
+t = np.array([1 if i % 2 == 0 else 0 for i in range(len(X))])
+
+print("Target value:", t)
+
+epochs = int(input("\nEnter number of epochs: "))
+
+for epoch in range(epochs):
+
+    print("\nEpoch:", epoch + 1)
+
+    for i in range(len(X)):
+
+        wsum = np.dot(X[i], W) + b
+
+        yin = 1 if wsum >= 0 else 0
+
+        error = t[i] - yin
+        
+        W = W + lr * error * X[i]
+
+        b = b + lr * error
+
+        print("wsum:", wsum, ", yin:", yin, ", Error:", error)
+        print("Wnew:", W)
+        print("bnew:", b)
+
+print("\nW_Final:", W)
+print("b_Final:", b)
+
+def perceptron_predict(X, W, b):
+
+    predictions = []
+
+    for i in range(len(X)):
+
+        wsum = np.dot(X[i], W) + b
+
+        yin = 1 if wsum >= 0 else 0
+
+        predictions.append(yin)
+
+    return np.array(predictions)
+
+predictions = perceptron_predict(X, W, b)
+
+print("\nPredictions:", predictions)
+
+accuracy = np.mean(predictions == t)
+
+print("\nAccuracy:", accuracy)

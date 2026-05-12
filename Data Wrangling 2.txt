@@ -1,0 +1,68 @@
+❖ Practical 2 
+ Data Wrangling II 
+Create an “Academic performance” dataset of students and perform the following operations using 
+Python. 
+ 
+1. Scan all variables for missing values and inconsistencies. If there are missing values and/or 
+inconsistencies, use any of the suitable techniques to deal with them. 
+2. Scan all numeric variables for outliers. If there are outliers, use any of the suitable techniques 
+to deal with them. 
+************************************************************************************************************
+import pandas as pd
+import numpy as np
+
+# Load dataset
+df = pd.read_csv(r"C:\Users\HP\Downloads\StudentsPerformance.csv")
+
+# Display first 5 rows
+print("Dataset Preview:")
+print(df.head())
+
+# Check missing values
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Fill missing values in numeric columns with mean
+for col in df.select_dtypes(include=np.number).columns:
+    df[col] = df[col].fillna(df[col].mean())
+
+# Fill missing values in object columns with mode
+for col in df.select_dtypes(include='object').columns:
+    df[col] = df[col].fillna(df[col].mode()[0])
+
+# Check missing values again
+print("\nAfter Handling Missing Values:")
+print(df.isnull().sum())
+
+# Numeric columns for processing
+numeric_cols = ['math score', 'reading score', 'writing score']
+
+# Remove outliers using IQR method
+for col in numeric_cols:
+    Q1 = df[col].quantile(0.25)
+    Q3 = df[col].quantile(0.75)
+    IQR = Q3 - Q1
+
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
+
+    df = df[(df[col] >= lower) & (df[col] <= upper)]
+
+# Dataset shape after outlier removal
+print("\nAfter Removing Outliers:")
+print(df.shape)
+
+# Normalize numeric columns using Min-Max Normalization
+for col in numeric_cols:
+    df[col] = (
+        (df[col] - df[col].min()) /
+        (df[col].max() - df[col].min())
+    )
+
+# Display normalized dataset
+print("\nAfter Normalization:")
+print(df.head())
+
+# Final dataset information
+print("\nFinal Dataset Info:")
+print(df.info())

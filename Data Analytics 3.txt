@@ -1,0 +1,105 @@
+ Data Analytics III 
+
+import numpy as np
+import pandas as pd
+
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix
+
+# Load Iris dataset
+iris = load_iris()
+
+# Features and target
+X = iris.data
+y = iris.target
+
+# Display dataset shape
+print("Dataset Shape:", X.shape)
+
+# Split dataset into training and testing
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.25,
+    random_state=0
+)
+
+# Create Naive Bayes model
+model = GaussianNB()
+
+# Train model
+model.fit(X_train, y_train)
+
+# Predict output
+y_pred = model.predict(X_test)
+
+# Display predicted values
+print("\nPredicted Values:")
+print(y_pred)
+
+# Multi-class confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+
+print("\nConfusion Matrix:")
+print(cm)
+
+# Convert into binary classification
+# Class 0 = Positive class
+y_test_bin = (y_test == 0)
+y_pred_bin = (y_pred == 0)
+
+# Binary confusion matrix
+cm2 = confusion_matrix(y_test_bin, y_pred_bin)
+
+print("\nBinary Confusion Matrix:")
+print(cm2)
+
+# Extract values
+TN = cm2[0][0]
+FP = cm2[0][1]
+FN = cm2[1][0]
+TP = cm2[1][1]
+
+# Display values
+print("\nTP =", TP)
+print("TN =", TN)
+print("FP =", FP)
+print("FN =", FN)
+
+# Calculate performance metrics
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+error_rate = (FP + FN) / (TP + TN + FP + FN)
+
+precision = TP / (TP + FP)
+
+recall = TP / (TP + FN)
+
+# Display metrics
+print("\nAccuracy =", accuracy)
+print("Error Rate =", error_rate)
+print("Precision =", precision)
+print("Recall =", recall)
+
+*****************************************************
+#Explaination :
+Confusion Matrix :
+Rows → Actual classes
+Columns → Predicted classes
+
+A)TP — True Positive
+
+Correctly predicted Setosa flowers.
+
+B) TN — True Negative
+
+Correctly predicted non-Setosa flowers.
+
+C) FP — False Positive
+
+Non-Setosa wrongly predicted as Setosa.
+
+D) FN — False Negative
+
+Setosa wrongly predicted as non-Setosa.

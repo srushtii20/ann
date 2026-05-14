@@ -1,0 +1,17 @@
+Data Visualization II 
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+#Load dataset
+titanic = sns.load_dataset('titanic')
+
+# Box plot
+sns.boxplot(x='sex', y='age', hue='survived', data=titanic)
+
+plt.title("Age Distribution by Gender and Survival")
+plt.xlabel("Gender")
+plt.ylabel("Age")
+plt.legend(title="Survived (0 = No, 1 = Yes)")
+
+plt.show()

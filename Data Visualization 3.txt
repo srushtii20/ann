@@ -1,0 +1,45 @@
+Data Visualization III 
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load Iris dataset
+iris = sns.load_dataset('iris')
+
+# Display first 5 rows
+print("Dataset Preview:")
+print(iris.head())
+
+# Display data types
+print("\nData Types:")
+print(iris.dtypes)
+
+# Histograms of all numeric features
+iris.hist(figsize=(10, 8))
+
+plt.suptitle("Histogram of Iris Features")
+
+plt.show()
+
+# Individual boxplots
+for col in iris.columns[:-1]:
+
+    plt.figure(figsize=(5, 4))
+
+    sns.boxplot(y=iris[col])
+
+    plt.title(f"Boxplot of {col}")
+
+    plt.show()
+
+# Boxplots by species
+for col in iris.columns[:-1]:
+
+    plt.figure(figsize=(6, 5))
+
+    sns.boxplot(x='species', y=col, data=iris)
+
+    plt.title(f"{col} by Species")
+
+    plt.show()

@@ -1,0 +1,83 @@
+Data Visualization I 
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Load Titanic dataset
+titanic = sns.load_dataset('titanic')
+
+# Display first 5 rows
+print("Dataset Preview:")
+print(titanic.head())
+
+# Dataset information
+print("\nDataset Info:")
+print(titanic.info())
+
+# Statistical summary
+print("\nDataset Description:")
+print(titanic.describe())
+
+# 1. Survival Count Plot
+plt.figure(figsize=(6, 5))
+
+sns.countplot(x='survived', data=titanic)
+
+plt.title("Survival Count (0 = Did not survived, 1 = Survived)")
+plt.xlabel("Survived")
+plt.ylabel("Count")
+
+plt.show()
+
+# 2. Survival by Gender
+plt.figure(figsize=(6, 5))
+
+sns.countplot(x='survived', hue='sex', data=titanic)
+
+plt.title("Survival by Gender")
+plt.xlabel("Survived")
+plt.ylabel("Count")
+
+plt.show()
+
+# 3. Survival by Passenger Class
+plt.figure(figsize=(6, 5))
+
+sns.countplot(x='survived', hue='class', data=titanic)
+
+plt.title("Survival by Class")
+plt.xlabel("Survived")
+plt.ylabel("Count")
+
+plt.show()
+
+# 4. Age Distribution
+plt.figure(figsize=(7, 5))
+
+sns.histplot(titanic['age'], bins=30, kde=True)
+
+plt.title("Age Distribution")
+plt.xlabel("Age")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# 5. Fare Distribution
+plt.figure(figsize=(7, 5))
+
+sns.histplot(titanic['fare'], bins=30, kde=True)
+
+plt.title("Fare Distribution")
+plt.xlabel("Fare Price")
+plt.ylabel("Number of Passengers")
+
+plt.show()
+
+*****************************************************************
+# Explaination :
+Survival Count Graph :More people died
+Survival by Gender Graph :Females survived more
+Survival by Class Graph :First-class survived more
+Age Distribution Graph :Most passengers were adults
+Fare Distribution Graph :Most passengers paid low fares

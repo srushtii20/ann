@@ -1,0 +1,125 @@
+Text Analytics 
+
+pip install nltk
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk import pos_tag
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+
+# -----------------------------
+# Download Required Data
+# -----------------------------
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('wordnet')
+
+# -----------------------------
+# Input Text
+# -----------------------------
+text = "Natural Language Processing is a field of Artificial Intelligence that helps computers understand human language."
+
+print("Original Text:\n", text)
+
+# -----------------------------
+# Tokenization
+# -----------------------------
+tokens = word_tokenize(text)
+print("\nTokens:\n", tokens)
+
+# -----------------------------
+# POS Tagging
+# -----------------------------
+pos_tags = pos_tag(tokens)
+print("\nPOS Tags:\n", pos_tags)
+
+# -----------------------------
+# Stopword Removal
+# -----------------------------
+stop_words = set(stopwords.words('english'))
+
+filtered_tokens = []
+
+for word in tokens:
+    if word.lower() not in stop_words:
+        filtered_tokens.append(word)
+
+print("\nAfter Stopword Removal:\n", filtered_tokens)
+
+# -----------------------------
+# Stemming
+# -----------------------------
+ps = PorterStemmer()
+
+stemmed_words = []
+
+for word in filtered_tokens:
+    stemmed_words.append(ps.stem(word))
+
+print("\nStemmed Words:\n", stemmed_words)
+
+# -----------------------------
+# Lemmatization
+# -----------------------------
+lemmatizer = WordNetLemmatizer()
+
+lemmatized_words = []
+
+for word in filtered_tokens:
+    lemmatized_words.append(lemmatizer.lemmatize(word))
+
+print("\nLemmatized Words:\n", lemmatized_words)
+
+# -----------------------------
+# Count Vectorizer
+# -----------------------------
+documents = [
+    "Natural language processing is fun",
+    "Machine learning and natural language processing",
+    "AI and NLP are closely related"
+]
+
+print("\nDocuments:\n", documents)
+
+vectorizer = CountVectorizer()
+
+X = vectorizer.fit_transform(documents)
+
+print("\nVocabulary:\n", vectorizer.get_feature_names_out())
+
+print("\nTF Matrix:\n", X.toarray())
+
+# -----------------------------
+# TF-IDF Vectorizer
+# -----------------------------
+tfidf = TfidfVectorizer()
+
+X_tfidf = tfidf.fit_transform(documents)
+
+print("\nTF-IDF Vocabulary:\n", tfidf.get_feature_names_out())
+
+print("\nTF-IDF Matrix:\n", X_tfidf.toarray())
+
+*********************************************************************************
+#Explaination :
+Tokenization:breaks sentence into smaller units called tokens.
+
+POS Tagging:It identifies grammatical role of words.
+Stopword Removal: remove words like is , a , of , that
+Stemming:Reduces words to root/base form.
+Natural:natur , Processing:process
+
+Lemmatization:Converts words into meaningful root words.
+
+What is Term Frequency (TF)?
+
+Counts how many times words appear in documents.
+
+Formula:
+
+TF(t)=Number of times term appears/Total terms in document/
+	​
+

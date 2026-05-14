@@ -1,0 +1,89 @@
+Data Analytics II 
+
+import numpy as np
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+
+# Load dataset from CSV file
+dataset = pd.read_csv(r"C:\Users\HP\Downloads\Social_Network_Ads.csv")
+
+# Display first 5 rows
+print("Dataset Preview:")
+print(dataset.head())
+
+# Features and target
+X = dataset[['Age', 'EstimatedSalary']].values
+y = dataset['Purchased'].values
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.25,
+    random_state=0
+)
+
+# Feature scaling
+sc = StandardScaler()
+
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+# Create Logistic Regression model
+model = LogisticRegression()
+
+# Train model
+model.fit(X_train, y_train)
+
+# Predict output
+y_pred = model.predict(X_test)
+
+# Confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+
+# Extract values
+TN = cm[0][0]
+FP = cm[0][1]
+FN = cm[1][0]
+TP = cm[1][1]
+
+# Performance metrics
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+
+error_rate = (FP + FN) / (TP + TN + FP + FN)
+
+precision = TP / (TP + FP)
+
+recall = TP / (TP + FN)
+
+# Display results
+print("\nPredicted Values:")
+print(y_pred)
+
+print("\nConfusion Matrix:")
+print(cm)
+
+print("\nTP =", TP)
+print("TN =", TN)
+print("FP =", FP)
+print("FN =", FN)
+
+print("\nAccuracy =", accuracy)
+print("Error Rate =", error_rate)
+print("Precision =", precision)
+print("Recall =", recall)
+
+*******************************************************
+#Explaination:
+TP:Model predicted Yes, and the answer is actually Yes
+TN:Model predicted No, and the answer is actually No
+FP:Model predicted Yes, and the answer is actually No
+FN:Model predicted No, and the answer is actually Yes
+
+Accuracy:Percentage of correct predictions.
+Error Rate:Percentage of incorrect predictions.
+Precision:Out of predicted purchasers,how many were actually correct.
+Recall:Out of actual purchasers,how many were correctly identified.

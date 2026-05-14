@@ -1,0 +1,167 @@
+Descriptive Statistics 
+
+import pandas as pd
+# Load dataset
+df = pd.read_csv(r"C:\Users\HP\Downloads\Salary Data.csv")
+
+# Display first 5 rows
+print("Dataset Preview:")
+print(df.head())
+
+# Display column names
+print("\nColumn Names:")
+print(df.columns)
+
+# Summary statistics for the dataset
+result = df[['Experience Years', 'Salary']].agg(
+    ['mean', 'median', 'min', 'max', 'std']
+)
+
+# Display statistics
+print("\nSummary Statistics:")
+print(result)
+
+*************************************************************************** 
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load Iris dataset
+iris = pd.read_csv(r"C:\Users\HP\Downloads\iris.csv")
+
+# Display dataset preview
+print("Iris Dataset Preview:")
+print(iris.head())
+
+# Group dataset by species
+grouped = iris.groupby('species')
+
+# Display statistics for each species
+for name, group in grouped:
+    print("\nSpecies:", name)
+    print(group.describe())
+
+# Create boxplot
+iris.boxplot(by='species', figsize=(8, 6))
+
+# Add title
+plt.title("Iris Dataset Boxplot")
+plt.suptitle("")
+
+# Display plot
+plt.show()
+plt.show() 
+iris.hist(figsize=(8,6)) 
+plt.suptitle("Distribution of Iris Features") 
+plt.show() 
+
+********************************************************************************
+
+# Boxplot Explaination:
+The dataset contains:
+
+Sepal Length
+Sepal Width
+Petal Length
+Petal Width
+
+Species:
+
+Setosa
+Versicolor
+Virginica
+1. Boxplot Graph Explanation
+
+The first image shows boxplots for iris features.
+
+What Boxplot Shows
+
+A boxplot displays:
+
+Median (middle line)
+Spread of data
+Minimum and maximum values
+Outliers
+
+A) Petal Length Boxplot
+
+Setosa has very small petal lengths.
+Versicolor has medium petal lengths.
+Virginica has largest petal lengths.
+
+Meaning
+Petal length clearly separates the species.
+Virginica flowers are largest.
+
+Outliers
+Small circles outside box indicate unusual values.
+
+B) Petal Width Boxplot
+
+Setosa has very small petal width.
+Virginica has largest petal width.
+
+Meaning
+Petal width is useful for classification of species.
+
+C) Sepal Length Boxplot
+
+Virginica has highest sepal length.
+Setosa has smallest sepal length.
+
+Meaning
+Sepal length varies across species but overlap exists.
+
+D) Sepal Width Boxplot
+
+Setosa has wider sepals.
+Versicolor has smaller spread.
+
+Meaning
+Sepal width differences are less clear compared to petal features.
+
+******************************************************************************
+
+Histogram Graph Explanation :
+
+A histogram shows:
+Frequency distribution
+How data values are spread
+
+A) Sepal Length Histogram:
+
+Most values are between 5 and 7.
+Few flowers have very small or very large lengths.
+
+Meaning
+Sepal length is moderately distributed.
+
+B) Sepal Width Histogram:
+
+Most values are around 3.
+Distribution is nearly bell-shaped.
+
+Meaning
+Data is close to normal distribution.
+
+C) Petal Length Histogram:
+Two peaks appear.
+
+Meaning
+Species have very different petal lengths.
+Data forms clusters.
+
+D) Petal Width Histogram:
+
+Most values lie between 0 and 2.
+Multiple peaks visible.
+
+Meaning
+Different species have distinct petal widths.
+
+
+The graphs show that:
+
+Setosa flowers are smallest,
+Virginica flowers are largest,
+Versicolor flowers are medium-sized.

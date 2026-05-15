@@ -1,6 +1,7 @@
 Descriptive Statistics 
 
 import pandas as pd
+
 # Load dataset
 df = pd.read_csv(r"C:\Users\HP\Downloads\Salary Data.csv")
 
@@ -12,15 +13,14 @@ print(df.head())
 print("\nColumn Names:")
 print(df.columns)
 
-# Summary statistics for the dataset
-result = df[['Experience Years', 'Salary']].agg(
+# Grouped summary statistics
+result = df.groupby('Experience Years')['Salary'].agg(
     ['mean', 'median', 'min', 'max', 'std']
 )
 
-# Display statistics
-print("\nSummary Statistics:")
+# Display result
+print("\nGrouped Summary Statistics:")
 print(result)
-
 *************************************************************************** 
 
 import pandas as pd
